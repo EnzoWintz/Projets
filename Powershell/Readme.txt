@@ -11,3 +11,9 @@ Description de ce que fait chaque scripts dans ce dossier :
                         Un fichier de log sera généré également.
                         
 A savoir que chaque scripts ont été incorporés au sein de tâches planifiés automatisant au maximum et limitant les opérations manuelles
+
+Le script Lecture_log.ps1 s'inscrivait dans une thématique de soucis de mise à niveau, certaines informations ont été volontairement anonymisées par respect de confidentialité,
+Le but de ce script est de vérifier dans les logs SCCM certains mots clé à la suite de l'enclenchement d'une séquence de tâche dans le cadre de la mise à niveau vers la 1909 de 
+Windows 10.
+
+En fonction du résultat de la recherche (affiné avec l'utilisation de Regex), des étapes seront retournées au prompt afin d'une meilleure prise en charge.
