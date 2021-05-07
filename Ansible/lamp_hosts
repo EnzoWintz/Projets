@@ -1,0 +1,5 @@
+[apache_php]
+host_web
+
+[db_mysql]
+host_db

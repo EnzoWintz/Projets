@@ -1,0 +1,16 @@
+- name: Creation du compte de service Apache
+  hosts: host_web
+  remote_user: root
+  vars_files:
+          - "vars/secret.yml"
+  roles:
+          - { role: comptes_service }
+
+- name: Mise en place LAMP
+  hosts: host_web
+  remote_user: root
+  vars_files:
+          - "vars/secret.yml"
+  roles:
+          - { role: Apache }
+          - { role: Php }

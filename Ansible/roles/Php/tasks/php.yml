@@ -1,0 +1,18 @@
+- name: Installation de Php
+  become_user: apache
+  apt:
+          name: php
+          state: present
+  register: res_php
+ 
+- debug:
+        msg: "{{ res_php }}"
+
+- name: copy index.php pour user "{{ perso }}"
+  template:
+          src: index.php.j2
+          dest: /var/www/index.php
+  register: res_copyphp
+
+- debug:
+        msg: "{{ res_copyphp }}"

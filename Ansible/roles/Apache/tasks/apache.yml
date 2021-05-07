@@ -1,0 +1,24 @@
+- name: Installation apache 
+  #  become_user: apache
+  become_user: apache
+  apt:
+          name: apache2
+          package: 2.4.29
+          state: present
+  register: res_apache
+  when: ansible_distribution_version == "18.04"
+- debug:
+        msg: "{{ res_apache }}"
+
+- name: Ajout fichier de configuration with restart
+  become_user: apache
+  template:
+          src: apache2.conf.j2
+          dest: /etc/apache2/apache.conf
+  notify:
+          - apache restart
+  register: res_conf
+
+- debug:
+        msg: "{{ res_conf }}"
+

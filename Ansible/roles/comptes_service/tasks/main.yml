@@ -1,0 +1,13 @@
+- name: Creation de user apache et mysql
+  user:
+      name: "{{item.name}}"
+      password: "{{ item.passwd }}"
+      system: yes
+      groups: sudo
+      append: no
+      create_home: no
+  loop:
+          - name: "{{user}}"
+            passwd: "{{ password | password_hash('sha512') }}"
+          - name: "{{mysqluser}}"
+            passwd: "{{mysqlpswd | password_hash('sha512') }}"
