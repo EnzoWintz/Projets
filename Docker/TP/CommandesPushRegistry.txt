@@ -1,0 +1,20 @@
+On montre notre registry d'images :
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
+On construit l'image à partir de notre répertoire courant :
+docker build -t httpdenzo .
+
+On la tag pour notre registry
+docker tag httpdenzo localhost:5000/httpdenzo
+
+On la push dans le registry
+docker push localhost:5000/httpdenzo
+
+On vide nos images
+docker image prune -a
+
+On appelle notre image
+docker pull localhost:5000/httpdenzo
+
+On run notre image avec comme nom httpd faisant référence à apache
+docker run -tid --name httpd localhost:5000/httpdenzo

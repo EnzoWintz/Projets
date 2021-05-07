@@ -1,0 +1,8 @@
+docker run --name some-drupal -p 8080:80 -d drupal
+
+docker run -d --name some-mysql \
+    -e MYSQL_DATABASE=drupal \
+    -e MYSQL_USER=user \
+    -e MYSQL_PASSWORD=password \
+    -e MYSQL_ROOT_PASSWORD=password \
+mysql:5.7
