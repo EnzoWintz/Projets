@@ -19,3 +19,5 @@ A savoir que chaque scripts ont été incorporés au sein de tâches planifiés 
                         les logs du client SCCM.
 
 - Icones_blanches.ps1 : Ce script traitait des soucis d'icônes blanche, il supprimait les icônes blanches en question et les copies par des icônes valide (des informations ont été anonymisées par respect de confidentialité).
+
+- Controle_powershell_ASI.ps1 : Ce script a été réalisé dans le cadre d'un contrôle lors de mon année de bachelor
