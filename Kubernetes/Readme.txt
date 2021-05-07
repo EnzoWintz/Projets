@@ -1,0 +1,1 @@
+Dans ce projet, on retrouvera un rendu sur Kubernetes avec une documentation explicative en pdf sur le déroulement et l'utilisation de chacun de ces fichiers.

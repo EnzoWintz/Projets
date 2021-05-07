@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: producteur-ds
+spec:
+  selector:
+    matchLabels:
+      producteur-ds: daemon
+  template:
+    metadata:
+      labels:
+        producteur-ds: daemon
+    spec:
+      containers:
+      - name: daemon-set-prod-alp
+        image: alpine:3.12
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo `hostname`-`date +%d%m` >> /web/index.html;sleep 60;done"]
+        volumeMounts:
+        - name: web-vol-pers
+          mountPath: /web
+      volumes: 
+      - name: web-vol-pers
+        hostPath:
+          path: /data/web 
