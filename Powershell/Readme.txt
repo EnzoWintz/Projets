@@ -17,3 +17,5 @@ A savoir que chaque scripts ont été incorporés au sein de tâches planifiés 
                     
 - MajPoliciesSCCM.ps1 : Ce script va mettre à jour les stratégies du client SCCM sur le poste de l'utilisateur avec indication ou se trouvent le résultat de ces commandes dans
                         les logs du client SCCM.
+
+- Icones_blanches.ps1 : Ce script traitait des soucis d'icônes blanche, il supprimait les icônes blanches en question et les copies par des icônes valide (des informations ont été anonymisées par respect de confidentialité).
