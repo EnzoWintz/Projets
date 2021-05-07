@@ -10,3 +10,4 @@ On y retrouvera :
 - Docker
 - Python
 - Linux - bash
+- Go
