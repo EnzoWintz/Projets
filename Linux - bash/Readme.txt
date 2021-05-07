@@ -1,4 +1,4 @@
-La documentation EJABBERD.pdf s'est illustrée dans le cadre d'un exercice du bachelor et réfère ce qui a été effectué pour mettre cela en place
+Le dossier EJABBERDINSTALL contient un TP fait en cours sur l'installation d'Ejabberd et se compose de script ainsi que de la documentation finale récapitulant toutes les actions effectuées.
 
 Fonction des scripts : 
 
