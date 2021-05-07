@@ -9,3 +9,4 @@ On y retrouvera :
 - Kubernetes
 - Docker
 - Python
+- Linux - bash
