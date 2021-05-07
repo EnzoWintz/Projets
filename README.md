@@ -11,3 +11,5 @@ On y retrouvera tout ce qui touche à l'univers de :
 - Python
 - Linux - bash
 - Go
+
+Ce repo a pour but d'être incrémenté et complété au fur et à mesure du temps.
