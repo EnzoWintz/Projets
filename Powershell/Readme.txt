@@ -12,8 +12,8 @@ Description de ce que fait chaque scripts dans ce dossier :
                         
 A savoir que chaque scripts ont été incorporés au sein de tâches planifiés automatisant au maximum et limitant les opérations manuelles
 
-Le script Lecture_log.ps1 s'inscrivait dans une thématique de soucis de mise à niveau, certaines informations ont été volontairement anonymisées par respect de confidentialité,
-Le but de ce script est de vérifier dans les logs SCCM certains mots clé à la suite de l'enclenchement d'une séquence de tâche dans le cadre de la mise à niveau vers la 1909 de 
-Windows 10.
-
-En fonction du résultat de la recherche (affiné avec l'utilisation de Regex), des étapes seront retournées au prompt afin d'une meilleure prise en charge.
+- Lecture_log.ps1 : Le script Lecture_log.ps1 s'inscrivait dans une thématique de soucis de mise à niveau, certaines informations ont été volontairement anonymisées par respect                     de confidentialité,
+                    Le but de ce script est de vérifier dans les logs SCCM certains mots clé à la suite de l'enclenchement d'une séquence de tâche dans le cadre de la mise à                         niveau vers la 1909 de Windows 10. En fonction du résultat de la recherche (affiné avec l'utilisation de Regex), des étapes seront retournées au prompt afin                     d'une meilleure prise en charge.
+                    
+- MajPoliciesSCCM.ps1 : Ce script va mettre à jour les stratégies du client SCCM sur le poste de l'utilisateur avec indication ou se trouvent le résultat de ces commandes dans
+                        les logs du client SCCM.
