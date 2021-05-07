@@ -4,3 +4,5 @@ L'ensemble des dossiers référencent ce que j'ai pu aborder durant mes études 
 On y retrouvera : 
 
 - Ansible
+- Powershell
+- Gitlab
