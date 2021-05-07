@@ -8,3 +8,4 @@ On y retrouvera :
 - Gitlab
 - Kubernetes
 - Docker
+- Python
