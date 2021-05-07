@@ -6,3 +6,4 @@ On y retrouvera :
 - Ansible
 - Powershell
 - Gitlab
+- Kubernetes
