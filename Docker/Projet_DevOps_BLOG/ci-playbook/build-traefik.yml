@@ -1,0 +1,19 @@
+# Creation d'un environement pour traefik  
+stages: 
+  - traefik
+
+Build Traefik:
+ stage: traefik
+ only:
+   refs:
+     - schedules
+   variables:
+     - $TRAEFIK=="true"
+ tags: 
+  - linux-sddc
+ script: 
+  - cd /home/workspace
+#On créé le fichier .json pour permettre la configuration du load balancing de traffik des nos apaches
+  - touch traefik/conf/acme.json
+#On attribue les droits nécessaire au fichier .json de configuration
+  - chmod 600 traefik/conf/acme.json

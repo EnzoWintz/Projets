@@ -1,0 +1,91 @@
+version: "2"
+services:
+  apache-php_host1:
+    image: localhost:5000/apache-php_host1_sdv:1
+    container_name: apache-php_load1_SDV
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - ./apache/wordpress:/var/www/html/wordpress
+      - ./apache/wordpress_conf:/scripts-conf/wordpress_conf
+    labels:
+      - traefik.http.routers.apache-php_host1.rule=Host(`www.wordpressblogavril.org`)
+      - traefik.http.routers.apache-php_host1.tls=true
+      - traefik.http.routers.apache-php_host1.tls.certresolver=lets-encrypt
+      - traefik.port=8080
+    networks:
+      vault_conf_SDV:
+         ipv4_address: 172.25.0.3
+
+  apache-php_host2:
+    image: localhost:5000/apache-php_host2_sdv:1
+    container_name: apache-php_load2_SDV
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - ./apache/wordpress:/var/www/html/wordpress
+      - ./apache/wordpress_conf:/scripts-conf/wordpress_conf
+    labels:
+      - traefik.http.routers.apache-php_host2.rule=Host(`www.wordpressblogavril.org`)
+      - traefik.http.routers.apache-php_host2.tls=true
+      - traefik.http.routers.apache-php_host2.tls.certresolver=lets-encrypt
+      - traefik.port=8080
+    networks:
+      vault_conf_SDV:
+         ipv4_address: 172.25.0.6
+
+  apache-php_host3:
+    image: localhost:5000/apache-php_host3_sdv:1
+    container_name: apache-php_load3_SDV
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - ./apache/wordpress:/var/www/html/wordpress
+      - ./apache/wordpress_conf:/scripts-conf/wordpress_conf
+    labels:
+      - traefik.http.routers.apache-php_host3.rule=Host(`www.wordpressblogavril.org`)
+      - traefik.http.routers.apache-php_host3.tls=true
+      - traefik.http.routers.apache-php_host3.tls.certresolver=lets-encrypt
+      - traefik.port=8080
+    networks:
+      vault_conf_SDV:
+         ipv4_address: 172.25.0.7
+
+
+  db:
+    image: localhost:5000/mariadb_sdv_node1:1
+    container_name: mariadb-node1_SDV
+    restart: always
+    labels:
+      - traefik.enable=false
+    networks:
+      vault_conf_SDV:
+         ipv4_address: 172.25.0.2
+
+  db2:
+    image: localhost:5000/mariadb_sdv_node2:1
+    container_name: mariadb-node2_SDV
+    restart: always
+    labels:
+      - traefik.enable=false
+    networks:
+      vault_conf_SDV:
+         ipv4_address: 172.25.0.4
+
+  db3:
+    image: localhost:5000/mariadb_sdv_node3:1
+    container_name: mariadb-node3_SDV
+    restart: always
+    labels:
+      - traefik.enable=false
+    networks:
+      vault_conf_SDV:
+         ipv4_address: 172.25.0.12
+
+networks:
+  vault_conf_SDV:
+    external:
+      name: vault_conf_SDV

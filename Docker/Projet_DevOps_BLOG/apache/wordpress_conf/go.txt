@@ -1,0 +1,69 @@
+
+Lien du github contenant les sources et les documentations : https://github.com/EnzoWintz/Projet_GlobalNet_DevOps_1405
+
+Cette partie fera référence au go développé pour ce projet
+
+Fait par Joël de GlobalNet
+
+
+1) Création du Go
+
+	Pour créer un plugin pour telegraf, on doit respecter un format de fichier précis, il doit y avoir au moins 4 fonctions et 1 structure:
+
+		- type Powertop struct { } : C’est la structure de notre fichier CSV, ainsi que celle qui sera envoyée dans notre base de données
+
+		- func (p *Powertop) Description string { } : On va ici indiquer une description de notre fichier dans un return « ».
+
+		- func (p *Powertop) SampleConfig() string { } : On va pouvoir indiquer des variables personnelles qui seront utilisées dans notre fichier de configurations. Ici on ne passe pas de variables, on va donc le laisser vide avec return « ».
+
+		- func (p *Powertop) Gather(acc telegraf.Accumulator) error { } : C’est le coeur de notre programme, c’est ici que l’on écrire notre code et envoyer nos données dans notre base de données.
+
+		- func init() { } : C’est la première fonction lancée de notre programme, c’est à partir de là que l’on va lancer toutes nos fonctions, grâce aux pointeurs que l’on a indiqué.
+
+
+
+	a) Gather
+
+	- Dans un premier temps, on importe le fichier. S’il n’y a pas de fichier, une erreur est retournée.
+
+	- Ensuite, on lit le fichier, puis on ferme le fichier, car il est conservé dans la mémoire.
+
+	- On rendre maintenant dans une boucle. On commence par lire le contenu du fichier, que l’on stocke dans la variable itt (pour itération). Si l’erreur retournée est en fait la fin du fichier, on sort de la boucle avec un break, sinon on affiche l’erreur.
+
+	- Ensuite, on va mapper les données lues du CSV dans la variable fields. Etant donné que chaque colonne correspond à une donnée, on indique son nom, suivi de son identifiant itt avec l’itération => itt[*]
+
+	- Finalement, on envoie le contenu de fields dans la base de données. On indique d’abord un nom, ici powertop, ensuite on indique le fields, puis un tag. Etant donné qu’on ne donne pas de tag, vu que par défaut il retourne le nom de la machine, ce que nous voulons, on indique seulement nil.
+
+2) powertop.csv
+
+	Ici, on va extraire le fichier généré par notre powertop en csv, on ne va conserver que le top 10.
+
+	Il est séparé en 5 catégories :
+
+		- Usage : le pourcentage du processeur utilisé
+		
+		- Events : Les IOPS
+
+		- Category : Le type de processus qui tourne
+
+		- Description : Le PID et le chemin du programme exécuté
+
+		- PW : La consommation électrique
+
+3) Difficultés
+
+	a) powertop.go
+
+		1) Error: Path :
+		Une difficulté rencontrée était celle du chemin du fichier, si le fichier powertop.csv n’est pas dans le répertoire du binaire, telegram nous ressort une erreur, d’ou l’intérêt d’indiquer une valeur absolue pour le chemin.
+
+		2) Error: string :
+		Les données envoyées étant considérées comme des string, on ne peut donc pas récupérer la données, il faut donc changer la donnée pour float64.
+	
+	b) /usr/bin/telegraf
+
+		1) Binaire :
+		Pour exécuter le binaire, le choix a été fait de l’ajouter dans le /usr/bin pour pouvoir le lancer de n’importe ou, mais cependant le globalnet.conf ne fonctionne pas, il faut donc indiquer une valeur absolue pour le chemin.
+
+		2) /dev/null :
+		Si on lance le script encapsulé dans un /bin/bash « », l’indicateur >/dev/null 2>&1, qui permet de ne pas avoir de retour dans le terminal (sinon telegraf ne libère pas le conteneur) et le & à la fin (pour lancer le programme dans un processus en tâche de fond) ne fonctionne pas, il faut donc s’en passer. Si on lance le script encapsulé dans un /bin/bash « », l’indicateur >/dev/null 2>&1, qui permet de ne pas avoir de retour dans le terminal (sinon telegraf ne libère pas le conteneur) et le & à la fin (pour lancer le programme dans un processus en tâche de fond) ne fonctionne pas, il faut donc s’en passer.

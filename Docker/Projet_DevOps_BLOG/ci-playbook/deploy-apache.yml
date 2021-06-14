@@ -1,0 +1,20 @@
+#On démarre le serveur apache qui permettra de configurer wordpress
+stages: 
+  - apache
+
+Deploy Apache:
+ stage: apache
+ only:
+   refs:
+     - schedules
+   variables:
+     - $APACHE=="true"
+ tags: 
+  - linux-sddc
+ script: 
+  - cd /home/workspace
+  - docker-compose up -d apache-php_host1
+#On démarre le second apache
+  - docker-compose up -d apache-php_host2
+#On démarre le troisième apache
+  - docker-compose up -d apache-php_host3

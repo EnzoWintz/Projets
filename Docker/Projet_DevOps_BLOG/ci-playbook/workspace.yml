@@ -1,0 +1,26 @@
+# Creation d'un environement de travail
+stages: 
+  - workspace
+
+Build Workspace:
+ stage: workspace
+ only:
+   refs:
+     - schedules
+   variables:
+     - $WORKSPACE=="true"
+ tags: 
+  - linux-sddc
+ script: 
+  - sudo rm -rf /home/workspace/*
+  - cp -r apache /home/workspace/apache
+  - cp -r build_repo /home/workspace/build_repo
+  - cp -r mysql /home/workspace/mysql
+  - cp -r registry /home/workspace/registry
+  - cp -r traefik /home/workspace/traefik
+  - cp -r vault_conf /home/workspace/vault_conf
+  - cp -r golang /home/workspace/golang
+  - cp -r docker-compose.yml /home/workspace/docker-compose.yml
+  - cp -r repo.yml /home/workspace/repo.yml
+  - cp -r copy_rootkey.sh /home/workspace/copy_rootkey.sh
+  

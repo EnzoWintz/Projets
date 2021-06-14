@@ -1,0 +1,22 @@
+version: "2"
+services:
+  influxbdd:
+    image: localhost:5000/influxdb_sdv:1
+    container_name: influxDB_SDV
+    labels:
+      - traefik.enable=false
+    ports:
+      - "8086:8086"
+    networks:
+      vault_conf_SDV:
+         ipv4_address: 172.25.0.16
+    volumes:
+      - influxdata:/data
+
+networks:
+  vault_conf_SDV:
+    external:
+      name: vault_conf_SDV
+
+volumes:
+  influxdata: {}

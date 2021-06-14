@@ -1,0 +1,21 @@
+#!/bin/bash
+chmod a+x apache/apache-entrypoint.sh
+chmod a+x apache/docker-entrypoint.sh
+chmod a+x apache/host1/docker-entrypoint.sh
+chmod a+x apache/host1/hyperdb.sh
+chmod a+x apache/host2/docker-entrypoint.sh
+chmod a+x apache/host3/docker-entrypoint.sh
+chmod a+x build_repo/purge_tmp_container.sh
+chmod a+x copy_rootkey.sh
+chmod a+x mysql/config_DB.sh
+chmod a+x mysql/mysql_host1/config_DB.sh
+chmod a+x mysql/mysql_host2/adduser.sh
+chmod a+x mysql/mysql_host3/adduser.sh
+chmod a+x purge_env.sh
+chmod a+x registry/confcert.sh
+chmod a+x registry/config_repo.sh
+chmod a+x vault_conf/scripts_vars/ADD_vault_vars_apache.sh
+chmod a+x vault_conf/scripts_vars/ADD_vault_vars_mysql.sh
+chmod a+x vault_conf/scripts_vars/ADD_vault_vars_mysql2.sh
+chmod a+x vault_conf/vault/config/VAULT_conf.sh
+chmod a+x golang/influx/build.sh

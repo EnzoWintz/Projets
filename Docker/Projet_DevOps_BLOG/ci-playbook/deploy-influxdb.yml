@@ -1,0 +1,19 @@
+#On démarre InfluxDB
+stages: 
+  - influxdb
+
+Deploy influxDB:
+ stage: influxdb
+ only:
+   refs:
+     - schedules
+   variables:
+     - $INFLUXDB=="true"
+ tags: 
+  - linux-sddc
+ script:
+  - cd /home/workspace 
+#On démarre InfluxDB
+  - docker-compose -f golang/influx.yml up -d
+#On exectute le script qui va configurer InfluxDB et télécharger téléraf
+  - docker exec influxDB_SDV /bin/bash "/opt/config.sh"

@@ -1,0 +1,24 @@
+version: "2"
+
+services:
+    traefik:
+        image: traefik:2.2
+        container_name: traefik_SDV
+        ports:
+            - "88:88"
+            - "443:443"
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./conf/traefik.toml:/traefik.toml
+            - ./conf/traefik_dynamic.toml:/traefik_dynamic.toml
+            - ./conf/acme.json:/acme.json
+        restart: always
+        networks:
+          vault_conf_SDV:
+             ipv4_address: 172.25.0.11
+
+networks:
+  vault_conf_SDV:
+    external:
+      name: vault_conf_SDV
+

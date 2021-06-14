@@ -1,0 +1,29 @@
+#Deploiment et configuration du Vault
+stages: 
+  - vault
+
+Deploy Vault:
+ stage: vault
+ only:
+   refs:
+     - schedules
+   variables:
+     - $DEPLOY_VAULT=="true"
+ tags: 
+  - linux-sddc
+ script: 
+  - cd /home/workspace
+#Commande qui va créer le vault qui stockera les variables
+  - docker-compose -f vault_conf/vault-compose.yml up -d --build
+#On exécute le script de configuration de Vault en se connectant sur le container
+  - docker exec vault_SDV ./vault/config/VAULT_conf.sh bash
+#On export le jeton root de Vault qui servira à la connexion sur Vault
+  - export VAULT_TOKEN=$(cat vault_conf/vault/keys_recup/rootkey.txt | sed -n '1p')
+#On injecte les variable pour apache sur Vault
+  - ./vault_conf/scripts_vars/ADD_vault_vars_apache.sh
+#On injecte les variables pour le master mysql sur Vault
+  - ./vault_conf/scripts_vars/ADD_vault_vars_mysql.sh
+#On injecte les variables pour le slave mysql2 sur Vault
+  - ./vault_conf/scripts_vars/ADD_vault_vars_mysql2.sh
+#On copie le jeton root dans les dossiers apache, mysql et mysql2
+  - ./copy_rootkey.sh

@@ -1,0 +1,18 @@
+stages: 
+  - mysql
+
+Deploy MySql:
+ stage: mysql
+ only:
+   refs:
+     - schedules
+   variables:
+     - $MYSQL=="true"
+ tags: 
+  - linux-sddc
+ script: 
+  - cd /home/workspace
+#On démarre notre seconde base de données 
+  - docker-compose up -d db2
+#On démarre notre troisième base de données
+  - docker-compose up -d db3

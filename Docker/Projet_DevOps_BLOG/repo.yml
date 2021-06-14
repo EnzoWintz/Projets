@@ -1,0 +1,21 @@
+version: "2"
+services:
+   registry:
+    restart: always
+    image: registry:2
+    container_name: registry_SDV
+    ports:
+        - 5000:5000
+    environment:
+        REGISTRY_HTTP_TLS_CERTIFICATE: /certs/localhost.crt
+        REGISTRY_HTTP_TLS_KEY: /certs/localhost.key
+        REGISTRY_AUTH: htpasswd
+        REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+        REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+    volumes:
+        - ./registry/data/:/var/lib/registry
+        - ./registry/certs/:/certs
+        - ./registry/auth/:/auth
+    labels:
+      - traefik.enable=false
+

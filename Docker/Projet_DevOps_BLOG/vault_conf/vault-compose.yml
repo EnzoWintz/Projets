@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+
+  vault:
+    build:
+      context: ./vault
+      dockerfile: Dockerfile
+    container_name: vault_SDV
+    ports:
+      - 8200:8200
+    volumes:
+      - ./vault/config:/vault/config
+      - ./vault/policies:/vault/policies
+      - ./vault/data:/vault/data
+      - ./vault/logs:/vault/logs
+      - ./vault/keys_recup:/vault/keys_recup
+    labels:
+      - traefik.enable=false
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8200
+    command: server -config=/vault/config/vault-config.json
+    cap_add:
+      - IPC_LOCK
+    networks:
+      SDV:
+         ipv4_address: 172.25.0.10
+
+networks:
+  SDV:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+       - subnet: 172.25.0.0/16
+         gateway: 172.25.0.1

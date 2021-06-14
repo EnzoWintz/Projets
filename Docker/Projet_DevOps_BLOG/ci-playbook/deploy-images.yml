@@ -1,0 +1,16 @@
+#On build nos images apache, mysql et mysql2 sans les démarrer
+stages: 
+  - deploy
+
+Deploy images:
+ stage: deploy
+ only:
+   refs:
+     - schedules
+   variables:
+     - $DEPLOY_IMAGES=="true"
+ tags: 
+  - linux-sddc
+ script: 
+  - cd /home/workspace
+  - docker-compose -f build_repo/build_before_push.yml up --no-start

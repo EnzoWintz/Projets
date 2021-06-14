@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+   db_build_node1:
+    build: .././mysql/mysql_host1/
+    image: mariadb_sdv_node1
+
+   db_build_node2:
+    build: .././mysql/mysql_host2/
+    image: mariadb_sdv_node2
+
+   db_build_node3:
+    build: .././mysql/mysql_host3/
+    image: mariadb_sdv_node3
+
+   apache-php_host1_build:
+    build: .././apache/host1/
+    image: apache-php_host1_sdv
+   
+   apache-php_host2_build:
+    build: .././apache/host2/
+    image: apache-php_host2_sdv
+
+   apache-php_host3_build:
+    build: .././apache/host3/
+    image: apache-php_host3_sdv
+
+   influxDB_build:
+    build: .././golang/influx/
+    image: influxdb_sdv
+ 

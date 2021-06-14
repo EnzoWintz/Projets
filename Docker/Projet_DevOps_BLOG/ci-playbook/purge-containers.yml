@@ -1,0 +1,16 @@
+#On purge nos containers qui ne sont pas démarrés car ils seront push sur notre registrie
+stages: 
+  - purge
+
+Purge Containers:
+ stage: purge
+ only:
+   refs:
+     - schedules
+   variables:
+     - $PURGE=="true"
+ tags: 
+  - linux-sddc
+ script: 
+  - cd /home/workspace
+  - ./build_repo/purge_tmp_container.sh

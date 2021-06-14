@@ -1,0 +1,41 @@
+stages: 
+  - purge-env
+
+Purge environement:
+ stage: purge-env
+ only:
+   refs:
+     - schedules
+   variables:
+     - $PURGE_ENV=="true"
+ tags: 
+  - linux-sddc
+ script: 
+  - cd /home/workspace
+  - docker stop vault_SDV
+  - docker rm vault_SDV
+  - docker stop registry_SDV
+  - docker rm registry_SDV
+  - docker stop apache-php_load1_SDV
+  - docker rm apache-php_load1_SDV
+  - docker stop apache-php_load2_SDV
+  - docker rm apache-php_load2_SDV
+  - docker stop apache-php_load3_SDV
+  - docker rm apache-php_load3_SDV
+  - docker stop mariadb-node1_SDV
+  - docker rm mariadb-node1_SDV
+  - docker stop mariadb-node2_SDV
+  - docker rm mariadb-node2_SDV
+  - docker stop mariadb-node3_SDV
+  - docker rm mariadb-node3_SDV
+  - docker stop traefik_SDV
+  - docker rm  traefik_SDV
+  - docker stop influxDB_SDV
+  - docker rm influxDB_SDV
+  - docker image rm localhost:5000/apache-php_host1_sdv:1
+  - docker image rm localhost:5000/apache-php_host2_sdv:1
+  - docker image rm localhost:5000/apache-php_host3_sdv:1
+  - docker image rm localhost:5000/mariadb_sdv_node1:1
+  - docker image rm localhost:5000/mariadb_sdv_node2:1
+  - docker image rm localhost:5000/mariadb_sdv_node3:1
+  - docker image rm localhost:5000/influxdb_sdv:1

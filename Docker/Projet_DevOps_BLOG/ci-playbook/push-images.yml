@@ -1,0 +1,17 @@
+#On push nos images local sur le registrie et on les supprime en local pour les pull depuis le registrie
+stages: 
+  - push
+
+Push images:
+ stage: push
+ only:
+   refs:
+     - schedules
+   variables:
+     - $PUSH=="true"
+ allow_failure: true
+ tags: 
+  - linux-sddc
+ script: 
+  - cd /home/workspace
+  - ./registry/config_repo.sh

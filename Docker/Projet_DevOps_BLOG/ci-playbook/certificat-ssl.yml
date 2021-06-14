@@ -1,0 +1,16 @@
+#On configure le certificat SSL de notre registrie
+stages: 
+  - ssl
+
+certificat SSL:
+ stage: ssl
+ only:
+   refs:
+     - schedules
+   variables:
+     - $CERTIFICAT=="true"
+ tags: 
+  - linux-sddc
+ script: 
+  - cd /home/workspace
+  - ./registry/confcert.sh

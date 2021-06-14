@@ -1,0 +1,10 @@
+  0.5%,179.5,Timer,tick_sched_timer,  705 mW  
+ 35.5%, 11.3,Process,[PID 3791] PK-Backend,  399 mW  
+  6.2%, 84.3,Process,[PID 1270] /usr/libexec/packagekitd ,  390 mW  
+  0.2%, 70.7,Process,[PID 0] swapper/3,  278 mW  
+  3.6%, 45.8,Process,[PID 2049] /usr/bin/gnome-software --gapplication-service ,  214 mW  
+  0.2%, 43.3,Interrupt,[63] amdgpu,  171 mW  
+  0.3%, 38.9,Process,[PID 0] swapper/4,  154 mW  
+  0.2%, 31.5,Interrupt,[7] sched(softirq),  124 mW  
+  0.0%, 28.7,Process,[PID 14] [rcu_sched],  112 mW  
+  0.4%, 22.6,Process,[PID 614] [irq/67-rtw88_pc], 92.2 mW  

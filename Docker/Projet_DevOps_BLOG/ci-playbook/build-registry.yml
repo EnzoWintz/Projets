@@ -1,0 +1,16 @@
+#On démarre notre registry
+stages: 
+  - registry
+
+Build registry:
+ stage: registry
+ only:
+   refs:
+     - schedules
+   variables:
+     - $BUILD_REGISTRY=="true"
+ tags: 
+  - linux-sddc
+ script: 
+  - cd /home/workspace
+  - docker-compose -f repo.yml up -d

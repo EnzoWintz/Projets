@@ -1,0 +1,35 @@
+stages:
+ - workspace
+ - vault
+ - traefik
+ - ssl
+ - registry
+ - deploy
+ - purge
+ - push
+ - influxdb
+ - gatherpw
+ - bdd
+ - apache
+ - mysql
+ - failover
+ - purge-env
+
+
+
+include:
+ - local: 'ci-playbook/workspace.yml'
+ - local: 'ci-playbook/deploy-vault.yml'
+ - local: 'ci-playbook/deploy-traefik.yml'
+ - local: 'ci-playbook/certificat-ssl.yml'
+ - local: 'ci-playbook/build-registry.yml'
+ - local: 'ci-playbook/deploy-images.yml'
+ - local: 'ci-playbook/purge-containers.yml'
+ - local: 'ci-playbook/push-images.yml'
+ - local: 'ci-playbook/deploy-bdd.yml'
+ - local: 'ci-playbook/deploy-apache.yml'
+ - local: 'ci-playbook/deploy-mysql.yml'
+ - local: 'ci-playbook/deploy-failover.yml'
+ - local: 'ci-playbook/deploy-influxdb.yml'
+ - local: 'ci-playbook/check-power.yml'
+ - local: 'ci-playbook/purge-env.yml'

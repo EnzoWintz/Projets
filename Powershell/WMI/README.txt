@@ -1,0 +1,1 @@
+- le script 1 - wmi_debug_infos_pc l listera des informations précise du poste sur lequel le script sera joué

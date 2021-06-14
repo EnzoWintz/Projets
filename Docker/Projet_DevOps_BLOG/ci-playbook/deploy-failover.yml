@@ -1,0 +1,17 @@
+#On joue le script de configuration du failover
+stages: 
+  - failover
+
+Failover:
+ stage: failover
+ only:
+   refs:
+     - schedules
+   variables:
+     - $FAILOVER=="true"
+ tags: 
+  - linux-sddc
+ script: 
+  - cd /home/workspace
+  - sleep 5
+  - docker exec apache-php_load1_SDV bash -c "cd /scripts-conf/ ; ./hyperdb.sh"

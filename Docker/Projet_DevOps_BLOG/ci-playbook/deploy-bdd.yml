@@ -1,0 +1,17 @@
+#On démarre le container de base de données primaire
+stages: 
+  - bdd
+
+Deploy bdd:
+ stage: bdd
+ only:
+   refs:
+     - schedules
+   variables:
+     - $BDD=="true"
+ tags: 
+  - linux-sddc
+ script: 
+  - cd /home/workspace
+  - docker-compose up -d db
+  - sleep 8

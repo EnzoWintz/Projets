@@ -1,0 +1,17 @@
+stages: 
+  - gatherpw
+
+Gather Power:
+ stage: gatherpw
+ only:
+   refs:
+     - schedules
+   variables:
+     - $INFLUXDB=="true"
+ tags: 
+  - linux-sddc
+ script:
+  - cd /home/workspace
+  - sleep 5
+#On donne la configuration à influxdb en utilisant le binaire généré par télégraphe
+  - docker exec influxDB_SDV /usr/bin/telegraf --config /opt/telegraf/globalnet.conf >/dev/null 2>&1 &
