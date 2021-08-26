@@ -309,7 +309,7 @@ else
 
 write-log "Jeu des strategies SCCM`n" -severity 1 -component "MAJ POLICIES"
 
-$machine = $env:COMPUTERNAME
+$machine = hostname
 #Lancement du HeartBeat
 $HearBeat = '{00000000-0000-0000-0000-000000000003}'|% {Invoke-WMIMethod -ComputerName $machine -Namespace root\ccm -Class SMS_CLIENT -Name TriggerSchedule $_} -ErrorAction SilentlyContinue
 
