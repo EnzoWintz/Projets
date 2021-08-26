@@ -24,5 +24,7 @@ A savoir que chaque scripts ont été incorporés au sein de tâches planifiés 
 
 - DeleteProfil.ps1 : Ce script permettra la suppression d'un profil windows en local
 
+- Uninstall_Appli_With_Progress_Bar.ps1 : Ce script prendra pour exemple la désinstallation de toute les versions de Java sur un poste incluant du Multithread couplé à une barre de progression en fonction des étapes auquelles le script se situ
+
 
 Dans le dossier WMI se trouvera les scripts utilisant les requêtes WMI
