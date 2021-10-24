@@ -26,5 +26,6 @@ A savoir que chaque scripts ont été incorporés au sein de tâches planifiés 
 
 - Uninstall_Appli_With_Progress_Bar.ps1 : Ce script prendra pour exemple la désinstallation de toute les versions de Java sur un poste incluant du Multithread couplé à une barre de progression en fonction des étapes auquelles le script se situ
 
+- Purge_Profil_Multiple_Choix_Barre_De_Progression.ps1 : Ce script revisite la suppression de profil windows avec la fusion de 3 actions en un seule script : Le renommage, la suppression de profil sans renommage et la suppression du dossier renommer le tout avec une barre de progression.
 
 Dans le dossier WMI se trouvera les scripts utilisant les requêtes WMI
