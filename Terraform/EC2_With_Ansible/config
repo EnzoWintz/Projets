@@ -1,0 +1,7 @@
+#!/bin/bash
+Host gitlab.com
+User git
+Hostname gitlab.com
+IdentityFile ~/.ssh/gitlab_key
+TCPKeepAlive yes
+IdentitiesOnly yes
