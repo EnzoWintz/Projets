@@ -2,11 +2,11 @@
 
 Interface principale
 =========
-![Alt text](/.gif/BDF_TOOLS.gif)
+![Alt text](.gif/BDF_TOOLS.gif)
 
 Barre de progression
 =========
-![Alt text](/.gif/BDF_TOOLS_PROGRESS_BAR.gif)
+![Alt text](.gif/BDF_TOOLS_PROGRESS_BAR.gif)
 
 Présentation du Projet BDF_Tools
 =========
