@@ -188,25 +188,18 @@ IP_Publique_De_l_Instance enzoleo.mollardwintz.com
 
 ### Déploiement _Portainer_, _Traefik_ et _Nod-Red_
 
-Ci-dessous la vidéo montrant les différentes étapes à la suite de l'exécution du Schedule **Deploy infra before build** : 
-
-![](XX-Illustrations/04-Gitlab-Deploy.mp4)
+Vous pouvez retrouver la vidéo montrant les différentes étapes à la suite de l'exécution du Schedule **Deploy infra before build** dans le dossier ```XX-Illustrations/04-Gitlab-Deploy.mp4```. 
 
 ### _Build_ et _Deploy_ des serveurs Web avec les vérification nécessaires.
 
-Ci-dessous la vidéo montrant le _Build_, le _Push_ dans le registry **Gitlab** ainsi que le déploiement des serveurs Web à la suite de la présence du mot _build_ dans un commit : 
-
-![](XX-Illustrations/05-Gitlab-Deploy-web_serv.mp4)
+Vous pouvez retrouver la vidéo montrant le _Build_, le _Push_ dans le registry **Gitlab** ainsi que le déploiement des serveurs Web à la suite de la présence du mot _build_ dans un commit au sein du dossier ```XX-Illustrations/05-Gitlab-Deploy-web_serv.mp4```. 
 
 ### BONUS : Destroy de l'infrastructure
 
-Ci-dessous la vidéo mettant en avant le Schedule **Destroy Infra** permettant la destruction de l'ensemble des élements de l'infrastructure : 
-
-![](XX-Illustrations/06-Gitlab-Destroy-web_serv.mp4)
+Vous pouvez retrouvez la vidéo mettant en avant le Schedule **Destroy Infra** permettant la destruction de l'ensemble des élements de l'infrastructure dans le dossier ```XX-Illustrations/06-Gitlab-Destroy-web_serv.mp4```. 
 
 ## Exécution de la chaine CI / CD Jenkins
 
-Voici une vidéo montrant le déroulement de l'exécution de la chaine CI / CD depuis **Jenkins** : 
+Vous pouvez retrouver la vidéo montrant le déroulement de l'exécution de la chaine CI / CD depuis **Jenkins** dans le dossier ```XX-Illustrations/jenkins-ci-cd.mp4```.
 
-![](XX-Illustrations/jenkins-ci-cd.mp4)
 
