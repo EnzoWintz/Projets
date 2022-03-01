@@ -1,0 +1,32 @@
+stages:
+  - nodred
+
+Deploy NodRed:
+  stage: nodred
+  tags:
+    - linux-sddc
+  only:
+   refs:
+     - schedules
+   variables:
+     - $INFRA=="true"
+
+  script:
+    - echo "Deploy NodRed"
+    - cd 03-NodRed
+    - docker-compose up -d
+
+Destroy NodRed:
+  stage: nodred
+  tags:
+    - linux-sddc
+  only:
+   refs:
+     - schedules
+   variables:
+     - $INFRA=="false"
+
+  script:
+    - echo "Destroy NodRed"
+    - cd 03-NodRed
+    - docker-compose down

@@ -1,0 +1,32 @@
+stages:
+  - portainer
+
+Deploy Portainer:
+  stage: portainer
+  tags:
+    - linux-sddc
+  only:
+   refs:
+     - schedules
+   variables:
+     - $INFRA=="true"
+
+  script:
+    - echo "Deploy Portainer"
+    - cd 00-Prerequis/01-portainer
+    - docker-compose up -d
+
+Destroy Portainer:
+  stage: portainer
+  tags:
+    - linux-sddc
+  only:
+   refs:
+     - schedules
+   variables:
+     - $INFRA=="false"
+
+  script:
+    - echo "Destroy Portainer"
+    - cd 00-Prerequis/01-portainer
+    - docker-compose down

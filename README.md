@@ -5,7 +5,7 @@ On y retrouvera tout ce qui touche à l'univers de :
 
 - Ansible
 - Powershell
-- Gitlab
+- CI - CD
 - Kubernetes
 - Docker
 - Python

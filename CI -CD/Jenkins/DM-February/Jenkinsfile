@@ -1,0 +1,192 @@
+pipeline{
+    agent any
+    environment{
+         CI_REGISTRY_PASSWORD = "glpat-Zy25fkPmQ-wzUGYCizU7"
+         CI_REGISTRY_USER = "WINTZEnzo"
+         CI_REGISTRY = "registry.gitlab.com"
+         CI_REGISTRY_IMAGE = "registry.gitlab.com/wintzenzo/dm28-02"
+         NGINX_DOCKER_IMG_NAME = "nginx_serv"
+         APACHE_DOCKER_IMG_NAME = "apache_serv"
+         DIR_PORTAINER = "00-Prerequis/01-portainer"
+         DIR_WEB = "04-Apache-Nginx"
+         IMAGE_TAG_TRAEFIK = "traefik:v2.2-custom"
+         IMAGE_TAG1 = "${CI_REGISTRY_IMAGE}:${NGINX_DOCKER_IMG_NAME}-${BUILD_ID}"
+         IMAGE_TAG2 = "${CI_REGISTRY_IMAGE}:${APACHE_DOCKER_IMG_NAME}-${BUILD_ID}"
+         DIR_LOAD = "01-02-Traefik_Whoami"
+         ACME_FILE = fileExists "${DIR_LOAD}/acme.json"
+         ACME_FILE_NAME = "${DIR_LOAD}/acme.json"
+         TRAEFIK_APACHE_FILE_NAME = "${DIR_LOAD}/docker-compose.yml"
+         TRAEFIK_APACHE_FILE = fileExists "${DIR_LOAD}/docker-compose.yml"
+         TRAEFIK_DOCKERFILE = "${DIR_LOAD}/traefik_img"
+         DIR_NOD = "03-NodRed"
+         DIR_NOD_REP = "${DIR_NOD}/node-red"
+         DIR_NOD_NAME = "node-red"
+         DIR_NOD_REP_NAME = fileExists "${DIR_NOD}/node-red"
+         NODRED_FILE = "${DIR_NOD}/docker-compose.yml"
+         NODRED_FILE_NAME = fileExists "${DIR_NOD}/docker-compose.yml"
+         NGINX_DOCKERFILE =  "${DIR_WEB}/nginx"
+         APACHE_DOCKERFILE =  "${DIR_WEB}/apache"
+         NGINX_APACHE_FILE_NAME = "${DIR_WEB}/docker-compose.yml"
+         NGINX_APACHE_FILE = fileExists "${DIR_WEB}/docker-compose.yml"
+    }
+    stages{
+        stage('Deploy portainer'){              
+               stages {
+                    stage('Docker compose up portainer') {
+                       steps {
+                       sh 'echo Deploy de Portainer'    
+                       sh 'cd ${DIR_PORTAINER} && docker-compose up -d'
+                       }
+                    }    
+              }
+        }
+        stage('Build de Traefik et Whoami'){
+            when { expression { TRAEFIK_APACHE_FILE == 'true' } }                   
+               stages {
+                   stage('Clean of acme.json') { 
+                      when { expression { ACME_FILE == 'true' } }
+                        steps {
+                        sh 'echo clean of ${ACME_FILE_NAME}'
+                        sh 'rm ${ACME_FILE_NAME}'
+                        }
+                   }
+                   stage('Create acme.json') { 
+                      when { expression { ACME_FILE == 'false' } }
+                        steps {
+                        sh 'echo create ${ACME_FILE_NAME}'
+                        sh 'cd ${DIR_LOAD} && touch ${ACME_FILE_NAME} && chmod 600 ${ACME_FILE_NAME}'
+                        }
+                   }
+                    stage('Verif conf docker-compose.yml') {
+                       steps {
+                       sh 'cd ${DIR_LOAD} && docker-compose config'
+                       }
+                    }
+                    stage('Build traefik custom img') {
+                       steps {
+                       sh 'echo Build de l image ${IMAGE_TAG_TRAEFIK}'    
+                       sh 'docker build -t ${IMAGE_TAG_TRAEFIK} ${TRAEFIK_DOCKERFILE}'
+                       }
+                    }    
+                    stage('up traefik') {
+                       steps {
+                       
+                       sh 'echo Build de l instance Traefik'
+                       sh 'cd ${DIR_LOAD} && docker-compose up -d'
+                       }    
+                    }
+              }
+        }
+        stage('Deploy de NodRed'){
+            when { expression { NODRED_FILE_NAME == 'true' } }                   
+               stages {
+                   stage('Clean of node-red folder') { 
+                      when { expression { DIR_NOD_REP_NAME == 'true' } }
+                        steps {
+                        sh 'echo clean of ${DIR_NOD_REP}'
+                        sh 'rm -rf ${DIR_NOD_REP}'
+                        }
+                   }
+                   stage('Recreate node-red after delete') { 
+                      when { expression { DIR_NOD_REP_NAME == 'true' } }
+                        steps {
+                        sh 'echo create ${DIR_NOD_NAME}'
+                        sh 'mkdir ${DIR_NOD}/${DIR_NOD_NAME}' 
+                        sh 'chmod 777 ${DIR_NOD}/${DIR_NOD_NAME}'
+                        }
+                   }
+                   stage('Create node-red') { 
+                      when { expression { DIR_NOD_REP_NAME == 'false' } }
+                        steps {
+                        sh 'echo create ${DIR_NOD_NAME}'
+                        sh 'cd ${DIR_NOD} && mkdir ${DIR_NOD_NAME} && chmod 777 ${DIR_NOD_NAME}'
+                        }
+                   }
+                    stage('Verif conf of nodred docker-compose.yml') {
+                       steps {
+                       sh 'cd ${DIR_NOD} && docker-compose config'
+                       }
+                    }
+                    stage('up nodred') {
+                       steps {
+                       
+                       sh 'echo Build de l instance NodRed'
+                       sh 'cd ${DIR_NOD} && docker-compose up -d'
+                       }    
+                    }
+              }
+        }
+        stage('Connect,Build Nginx image and push it to registry') {
+            stages {
+ 
+               stage('Connect to gitlab registry') {
+                  steps {
+                  sh 'echo -n ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}'
+                  }
+               }
+               stage('build') {
+                   steps {
+                   sh 'echo Build de l image ${IMAGE_TAG1}'    
+                   sh 'docker build -t ${IMAGE_TAG1} ${NGINX_DOCKERFILE}'
+                   
+                   sh 'echo Build de l image ${IMAGE_TAG2}'    
+                   sh 'docker build -t ${IMAGE_TAG2} ${APACHE_DOCKERFILE}'
+                   }
+                }
+                stage('push') {
+                   steps {
+                   sh 'echo push de l image ${IMAGE_TAG1} to ${CI_REGISTRY_IMAGE}'    
+                   sh 'docker push ${IMAGE_TAG1}'
+    
+                   sh 'echo push de l image ${IMAGE_TAG2} to ${CI_REGISTRY_IMAGE}'    
+                   sh 'docker push ${IMAGE_TAG2}'
+                   }
+                }
+            }
+        }
+         
+        stage('Build des instances web'){
+            when { expression { NGINX_APACHE_FILE == 'true' } }
+                stages {
+                    stage('create env vars') {
+                       steps {
+                       sh 'echo Initialisation des variables d environnement pour le compose des serveurs web'
+                       sh 'export IMAGE_TAG1=${IMAGE_TAG1}'
+                       sh 'export IMAGE_TAG2=${IMAGE_TAG2}'
+                       }
+                    }
+                    stage('Verif conf docker-compose.yml') {
+                       steps {
+                       sh 'cd ${DIR_WEB} && docker-compose config'
+                       }
+                    } 
+                    stage('up servs web') {
+                       steps {
+                       
+                       sh 'echo Build des instances ${APACHE_DOCKER_IMG_NAME} et ${NGINX_DOCKER_IMG_NAME}'
+                       sh 'cd ${DIR_WEB} && docker-compose up -d'
+                       }    
+                    }
+                }
+        }
+        stage('Curl ServWebs'){              
+               stages {
+                    stage('Curl') {
+                        steps {
+                        sh 'sleep 10'
+                        sh 'curl --insecure https://enzoleo.mollardwintz.com:443/'
+                        sh 'curl --insecure https://enzoleo.mollardwintz.com:443/'
+                        sh 'curl --insecure https://enzoleo.mollardwintz.com:443/'
+                        sh 'curl --insecure https://enzoleo.mollardwintz.com:443/'
+                        sh 'curl --insecure https://enzoleo.mollardwintz.com:443/'
+                        sh 'curl --insecure https://enzoleo.mollardwintz.com:443/'
+                        sh 'curl --insecure https://enzoleo.mollardwintz.com:443/'
+                        sh 'curl --insecure https://enzoleo.mollardwintz.com:443/'
+                        sh 'curl --insecure https://enzoleo.mollardwintz.com:443/'
+                        sh 'curl --insecure https://enzoleo.mollardwintz.com:443/'
+                        }
+                    }
+                }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+## STATIC CONFIGURATION
+log:
+  level: INFO
+
+api:
+  insecure: true
+  dashboard: true
+
+entryPoints:
+  web:
+    address: ":8081"
+  websecure:
+    address: ":443"
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+  file:
+    filename: "traefik.yml"
+
+certificatesResolvers:
+  lets-encr:
+    acme:
+      storage: acme.json
+      email: enzo.wintz1@gmail.com
+      httpChallenge:
+        entryPoint: web
+

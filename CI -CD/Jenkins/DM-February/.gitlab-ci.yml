@@ -1,0 +1,23 @@
+stages:
+  - portainer
+#  - jenkins
+  - traefik
+  - nodred
+  - build-nginx
+  - build-apache
+  - test
+  - deploy
+  - check
+
+
+include:
+ - local: 'ci-playbook/deploy-portainer.yml'
+# - local: 'ci-playbook/deploy-jenkins.yml'
+ - local: 'ci-playbook/traefik.yml'
+ - local: 'ci-playbook/nodred.yml'
+ - local: 'ci-playbook/nginx-build.yml'
+ - local: 'ci-playbook/apache-build.yml'
+ - local: 'ci-playbook/test.yml'
+ - local: 'ci-playbook/deploy.yml'
+ - local: 'ci-playbook/check.yml'
+

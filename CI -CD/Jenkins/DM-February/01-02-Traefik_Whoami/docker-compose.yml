@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  traefik:
+    image: "traefik:v2.2-custom"
+    container_name: Traefik
+    hostname: "traefik"
+    privileged: true
+    user: root
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+      - "8081:8080"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./acme.json:/etc/traefik/acme.json"
+
+  whoami:
+    image: "containous/whoami"
+    restart: always
+    container_name: Whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`enzoleo_whoami.mollardwintz.com`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
+
+      - "traefik.http.routers.whoami-secured.rule=Host(`enzoleo_whoami.mollardwintz.com`)"
+      - "traefik.http.routers.whoami-secured.entrypoints=websecure"
+      - "traefik.http.routers.whoami-secured.tls.certresolver=tls"
+
+
+networks:
+  default:
+    external:
+      name: "$DEFAULT_NETWORK"

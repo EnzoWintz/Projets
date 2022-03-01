@@ -1,0 +1,32 @@
+stages:
+  - jenkins
+
+Deploy Jenkins:
+  stage: jenkins
+  tags:
+    - linux-sddc
+  only:
+   refs:
+     - schedules
+   variables:
+     - $INFRA=="true"
+
+  script:
+    - echo "Deploy Jenkins"
+    - cd 00-Prerequis/03-jenkins
+    - docker-compose up -d
+
+Destroy Jenkins:
+  stage: jenkins
+  tags:
+    - linux-sddc
+  only:
+   refs:
+     - schedules
+   variables:
+     - $INFRA=="false"
+
+  script:
+    - echo "Destroy Jenkins"
+    - cd 00-Prerequis/03-jenkins
+    - docker-compose down

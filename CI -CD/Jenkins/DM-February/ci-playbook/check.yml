@@ -1,0 +1,18 @@
+stages:
+  - check
+
+check:
+  stage: check
+  tags:
+    - linux-sddc
+  script:
+    - echo "Test Srv Web"
+    - sleep 10
+    - curl --insecure https://enzoleo.mollardwintz.com:443/
+    - curl --insecure https://enzoleo.mollardwintz.com:443/
+    - curl --insecure https://enzoleo.mollardwintz.com:443/
+    - curl --insecure https://enzoleo.mollardwintz.com:443/
+
+  only:
+    variables:
+         - $CI_COMMIT_MESSAGE =~ /build/

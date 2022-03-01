@@ -1,0 +1,25 @@
+stages:
+  - deploy
+
+deploy Apache Nginx:
+  stage: deploy
+  tags:
+    - linux-sddc
+  script:
+    - echo "Deploy Apache & Nginx"
+    - cd 04-Apache-Nginx/
+    - docker-compose up -d
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /build/
+
+
+Destroy Apache Nginx:
+  stage: deploy
+  tags:
+    - linux-sddc
+  script:
+    - echo "Destroy Apache & Nginx"
+    - cd 04-Apache-Nginx/
+    - docker-compose down
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /destroy/

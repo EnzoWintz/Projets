@@ -1,0 +1,3 @@
+#Prerequis
+Il est nécessaire de créer le dossier node-red et lui mettre les droits nécessaire pour que le container node red puisse s'exécuter
+mkdir node-red && chmod 777 node-red

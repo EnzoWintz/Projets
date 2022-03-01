@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+  mynodered:
+    image: nodered/node-red
+    restart: unless-stopped
+    container_name: nodered
+    privileged: true
+    user: root
+    networks:
+      - $DEFAULT_NETWORK
+    volumes:
+        - "./node-red:/data"
+    ports:
+        - "1880:1880"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nodered.entrypoints=web"
+      - "traefik.http.routers.nodered.rule=Host(`$MY_DOMAIN`)"
+      - "traefik.http.routers.nodered.tls.certresolver=lets-encr"
+      - "traefik.http.services.Node-Red-Services.loadbalancer.server.port=80"  
+
+networks:
+  web:
+    external:
+      name: $DEFAULT_NETWORK
+

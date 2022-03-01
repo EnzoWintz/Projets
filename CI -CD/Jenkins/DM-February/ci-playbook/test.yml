@@ -1,0 +1,15 @@
+stages:
+  - test
+
+Test File:
+  stage: test
+  tags:
+    - linux-sddc
+
+  script:
+    - echo "Srv Web file test"
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /build/
+    - exists:
+       - /04-Apache-Nginx/docker-compose.yml
+       

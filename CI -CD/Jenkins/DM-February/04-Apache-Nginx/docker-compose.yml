@@ -1,0 +1,33 @@
+version: "3.3"
+
+services:
+  apache:
+    image: "$IMAGE_TAG2"
+    container_name: Apache-srv
+    restart: always
+    networks:
+      - $DEFAULT_NETWORK
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.apache.entrypoints=websecure"
+      - "traefik.http.routers.apache.rule=Host(`$MY_DOMAIN`)"
+      - "traefik.http.routers.apache.tls.certresolver=lets-encr"
+      - "traefik.http.services.web-servers-Services.loadbalancer.server.port=80"  
+
+  nginx:
+    image: "$IMAGE_TAG1"
+    container_name: Nginx-srv
+    restart: always
+    networks:
+      - $DEFAULT_NETWORK
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx.entrypoints=websecure"
+      - "traefik.http.routers.nginx.rule=Host(`$MY_DOMAIN`)"
+      - "traefik.http.routers.nginx.tls.certresolver=lets-encr"
+      - "traefik.http.services.web-servers-Services.loadbalancer.server.port=80"  
+
+networks:
+  web:
+    external:
+      name: "$DEFAULT_NETWORK"

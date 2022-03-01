@@ -1,0 +1,14 @@
+#On va créer pour commencer notre network web avec la commande : 
+docker network create web
+
+#il est nécessaire ensuite de créer le fichier acme.json et de lui attribuer les droits nécessaires : 
+touch acme.json && chmod 600 acme.json
+
+#Pour permettre la possibilité de pouvoir faire un :
+
+curl enzoleo.mollardwintz.com  
+
+On a modifié le fichier hosts avec sudo vim /etc/hosts et ajouter la ligne suivante : 
+
+#IP du container Whoami #Nom de domaine associé
+172.17.0.5 i            enzoleo.mollardwintz.com

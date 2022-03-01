@@ -1,0 +1,17 @@
+stages:
+  - build-apache
+
+variables:
+  IMAGE_TAG2: $CI_REGISTRY_IMAGE:apache-srv
+
+Build Apache:
+  stage: build-apache
+  tags:
+    - linux-sddc
+  before_script:
+    - echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+  script:  
+    - docker build -t $IMAGE_TAG2 04-Apache-Nginx/apache/
+    - docker push $IMAGE_TAG2
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /build/

@@ -1,0 +1,53 @@
+stages:
+  - traefik
+
+Build Traefik-Whoami:
+  stage: traefik
+  tags:
+    - linux-sddc
+  only:
+   refs:
+     - schedules
+   variables:
+     - $INFRA=="true"
+
+  script: 
+    - echo clean of 
+    - rm 01-02-Traefik_Whoami/acme.json
+    - echo create NodeRed
+    - touch 01-02-Traefik_Whoami/acme.json
+    - chmod 600 01-02-Traefik_Whoami/acme.json
+    - echo "Build traefik and Whoami"
+    - docker build -t traefik:v2.2-custom 01-02-Traefik_Whoami/traefik_img/
+
+
+Deploy Traefik-Whoami:
+  stage: traefik
+  needs: [Build Traefik-Whoami]
+  tags:
+    - linux-sddc
+  only:
+   refs:
+     - schedules
+   variables:
+     - $INFRA=="true"
+
+  script:
+    - echo "Deploy traefik and Whoami"
+    - cd 01-02-Traefik_Whoami
+    - docker-compose up -d
+
+Destroy traefik-Whoami:
+  stage: traefik
+  tags:
+    - linux-sddc
+  only:
+   refs:
+     - schedules
+   variables:
+     - $INFRA=="false"
+
+  script:
+    - echo "Destroy traefik and Whoami"
+    - cd 01-02-Traefik_Whoami
+    - docker-compose down
