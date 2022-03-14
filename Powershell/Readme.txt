@@ -29,6 +29,3 @@ A savoir que chaque scripts ont été incorporés au sein de tâches planifiés 
 - Purge_Profil_Multiple_Choix_Barre_De_Progression.ps1 : Ce script revisite la suppression de profil windows avec la fusion de 3 actions en un seul script : Le renommage, la suppression de profil sans renommage et la suppression du dossier renommer le tout avec une barre de progression.
 
 - Dans le dossier WMI se trouver les scripts utilisant les requêtes WMI
-
-- Dans le dossier BDF_TOOLS se trouve mon projet en Powershell qui correspond à la réalisation d'un outil permettant la résolution d'incidents dans le cadre de mon année d'alternance au sein de la Banque De France.
-
